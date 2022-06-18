@@ -1,0 +1,21 @@
+<!-- <p [align]="a">This is a para</p>
+<input type="text" name="" id="" [value]="a"><br>
+<input type="text"  id="" [(ngModel)]="a">
+<br>
+{{a}} -->
+<!-- {{username}} <br>
+{{password}}
+<br>
+<form>
+    User Name: <input type="text" name="a" id="" class="form-control" [(ngModel)]="username">
+    Password: <input type="password" name="b" id="" class="form-control" [(ngModel)]="password" ><br>
+    <input type="button" value="Login" class="btn btn-success" (click)="fn1()">
+</form> -->
+
+{{this.loginForm.value | json}}
+
+<form [formGroup]="loginForm">
+    User Name: <input type="text" name="" id="" formControlName="username" class="form-control">
+    Password: <input type="password" name="" id="" formControlName="password" class="form-control"><br>
+    <input type="button" value="Login" class="btn btn-success" (click)="fn1()">
+</form>

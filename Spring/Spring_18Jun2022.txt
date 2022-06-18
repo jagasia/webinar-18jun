@@ -1,0 +1,377 @@
+Webinar 11:00 am to 12:30 am
+---------------------------------------
+Spring Framework
+----------------------
+What is Spring?
+Why Spring?
+What are the spring modules?
+Spring core
+Spring AOP
+Spring MVC
+Spring REST
+Spring Security
+Angular + Spring integration
+
+Before spring?
+	EJB was the framework we used before spring.
+		Enterprise Java Beans
+			Java Beans = reusable piece of code developed in java language
+			Java Bean + services	= EJB
+	what are those services?
+		generic services	
+			security
+			scalability		
+			life cycle management
+			persistence
+			transaction management
+		application specific services
+			are provided by the Bean
+
+
+xml configurations
+annotations
+
+EJB was considered as complex framework
+	winter season
+
+Entities
+	@Entity
+Persistence
+	spring data jpa
+
+so the programmers were waiting for Spring season
+Spring framework
+	spring season for developers
+
+
+Life cycle management:
+	bean creation
+	bean passivation
+	bean activation
+	bean destroy
+
+Even before any request is received
+	there are pool of instances created
+
+and each instance is served to the requests.
+
+When there is no more instances available in the pool,
+	then it will find the most idle instance
+	and passivate
+		store the state of the instance in secondary storage
+		and that instance is now free for new requeswt
+
+	and when those idle instances become active
+	and activate
+		obtain another free instance,
+		fill the state from secondary storage
+
+construction and destruction
+
+In spring framework, we are not going to create objects of Beans
+
+
+EmployeeDao is a bean
+	we will not create an object of this bean like
+		EmployeeDao edao=new EmployeeDao();				//NOT LIKE THIS
+
+	rather we will obtain an instance from instance pool	(IN SPRING)
+		EmployeeDao edao=context.getBean(EmployeeDao.class);		//LIKE THIS
+
+
+how to start with spring framework?
+	Spring (or) Spring boot?
+	Spring framework, can be used in any type of project
+		Java project
+		Dynamic web project
+
+maven/ gradle
+
+maven project
+	dependencies
+
+in java projects, we add .jar files to the project
+	that is not good idea, that will increase the size of the project
+	difficult to manage the jar versions
+
+maven projects
+	allow us to use the dependencies
+		those dependencies will download jar files only once.
+	every project, referring to those dependencies, will refer to that local repository of maven 
+
+
+Lets see how to create a simple maven project
+and use spring dependencies
+and get Bean from IOC containers
+
+Demo:
+--------
+	eclipse/ Spring tool suite
+1) open eclipse / sts
+2) create a maven project
+	group id:	com.wipro.hrms
+	artifact id: jun18-demo-1
+	package:	same as group id
+3) run the App.java
+	Hello world
+
+4) in pom.xml
+	add the following dependencies
+		Spring context
+
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.3.21</version>
+</dependency>
+
+5) a class can be defined as a "bean" in 2 ways:
+	using xml configuration (or)
+	using annotations
+
+6) lets create "bean.xml" file inside "src" directly	(not inside any package)
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+   ">
+
+
+</beans>	
+
+7) Create my bean class
+	Employee.java
+		id
+		firstName
+		lastName
+		salary
+
+8) go to bean.xml and define the employee as a bean
+	<bean id="emp" class="com.wipro.hrms.entity.Employee">
+	</bean>
+
+9) in App.java
+	        //to get bean from context, first we need to declare the context
+        //what is a context? Context is the object representation of xml configuration file
+        ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("bean.xml");
+        Employee e = ctx.getBean(Employee.class);
+        e.setId(12);
+        e.setFirstName("Raja");
+        System.out.println(e);
+
+10) now go to bean.xml
+	<bean id="emp" class="com.wipro.hrms.entity.Employee">
+		<property name="id" value="100" />
+		<property name="firstName" value="Raja" />
+		<property name="lastName" value="Sivakumar" />
+		<property name="salary" value="123456.5" />
+	</bean>
+
+11) run App.java
+	you can find the employee object with values
+
+
+
+IOC & Dependency Injection
+-------------------------------------
+What is dependency injection?
+	In the above example, 
+		Employee had the following dependencies:
+			id
+			firstName
+			lastName
+			salary
+
+		These values can be injected using
+			constructor with arguments
+			setter methods
+
+	when i use <property> tag, in <bean>
+		then i am using "setter" based injection.
+
+	to confirm that, lets "remove" the setter methods and run.
+
+	we get error when we use <property> tag and do not have setter methods.
+
+	A dependecy of a class, is injected by IOC container, using
+		constructor (or)
+		setter
+
+	<property> 	=> setter based injection
+	<constructor-arg>	=> constructor based injection
+
+What are the types of dependency injection?
+	setter based
+	constructor based
+
+What is IOC?
+	Inversion of Control
+
+	Imagine, if you purchase a car. And that car has an audio player. 
+	If the car manufacturer, gives you options to choose which audio player you want to be installed in the car.
+
+	Inversion of Control?
+
+how the same can be implemented in our Java code?
+
+class Car
+{
+	Sony sony;		//tightly coupled		
+}
+
+class Car
+{
+	Pioneer pioneer;
+}
+
+In both of the above scenarios,
+	Car is tightly coupled 
+		either with Sony (or) Pioneer.
+
+Now consider the below scenario:
+
+interface Audio
+{}
+
+class Sony implements Audio
+{}
+
+class Pioneer implements Audio
+{}
+
+class Car
+{
+	Audio audio;		//loosely coupled
+
+	public Car()
+	{}
+	public Car(Audio audio)
+	{
+	}
+
+	public void setAudio(Audio audio)
+	{
+		this.audio=audio;
+	}
+}
+
+the above code depicts "loosely coupled" dependency
+
+Car bmw=new Car(new Sony());
+Car swift=new Car(new Pioneer());
+swift.setAudio(new Sony());
+
+
+whenever there is a loosely coupling, then there is a Inversion Of Control
+
+IOC container that will take care of the life cycle management.
+
+What is container?
+	it is a special JVM
+	it takes care of "generic" services
+
+
+Same example, we discussed now, can be done as a demo
+
+Demo:
+	xml based dependency injection
+
+In this example, there were 
+	sony
+	pioneer
+
+but based on which bean we ref in property, that bean was injected.
+
+But,
+What is autowiring?
+
+Same example in Annotation method
+
+for annotations,
+	to mark a class as a bean,	there are 2 ways:
+	1) mark the class with @Component annotation (or)
+	2) mark the method that returns the bean instance with @Bean annotation
+
+
+1) types of dependency injection
+	constructor based injection
+	setter based injection
+2) types of autowiring
+	byName
+	byType
+
+------------------------Spring core-------------------------------------
+Spring boot
+	zero xml configuration
+	built in apace tomcat
+	convention over configuration
+
+I can create a spring boot project without IDE support
+	start.spring.io
+
+download the project
+
+i can run the project also without IDE support.
+
+If you compare a servelt/jsp program, how many of you will be able to run servlets without IDE?	
+
+
+For a spring MVC project, 
+	lot of steps 
+		configurint Despatcher Servlet
+		view resolvers
+		
+	importantly xml configurations
+
+but for Spring Boot Mvc Project
+	very minimal steps
+
+
+Error:
+"Path with "WEB-INF" or "META-INF": [WEB-INF/views/index.jsp]"
+
+Solution:
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+
+
+
+What is the difference between  MVC project and a REST api?
+
+in mvc project
+	model
+	view
+	controller
+
+in rest api
+	model
+	controller
+
+		there will not be a view
+
+the view will be provide by other project	(may be an MVC or angular or reactjs app)
+
+In mvc:
+	@Controller
+		the mapping methods return view name
+	
+In rest:
+	@RestController
+		the mapping methods return content (not the view name)
+
+
+@RestController = @Controller + @ResponseBody
+
+to test the post, put, delete mapping
+because a browser supports only get mapping form browser url
+
+Postman
+	test all the http method mappings
+
+Swagger
+	is used to generate documentation for rest api and also it can do whatever a post man does.
+	it will make it easy to create json text for sending to post or put
+

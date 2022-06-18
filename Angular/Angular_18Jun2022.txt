@@ -1,0 +1,299 @@
+9:00 am to 10:30 am		1.5 hours
+-------------------------
+Typescript
+Lets understand Angular		angular Js	was the first version. second version onwards, it is not AngularJs, it is only Angular (2 onwards)
+How to start with Angular
+Create angular project
+Create angular components
+Create angular services
+FormsModule
+ReactiveFormsModule
+Pipes and Custom Pipes
+Forms validation
+REST API integration
+
+Why should we learn angular?
+	to make our websites more interactive
+	SPA	Single Page Application
+	Additional security
+	dynamic web applications
+servlet/ jsp
+same page contents 
+	header
+	menus/ nav
+	footer
+	logo
+	signin/signout
+
+all these are reduntantly placed in most of the pages
+	why not we have that common page once
+		and replace the content based on requirement
+
+	thats why SPA concept is introduced
+
+I can use
+	Javascript/ Jquery
+	reactjs
+serverside:-
+	JSP
+	ASP
+	PHP
+
+
+angular comes in front end. 
+
+Why angular, instead of javascript?
+	between javascript and angular, 
+	one more language is there
+		Typescript
+
+Javascript versions
+	latest 6
+
+every time when a new version of javascript was introduced
+	a browser update was required.
+
+	because, browsers executed the javascript code.
+
+
+javascript evolution stops at version ES6		
+they are not going to introduce new version. But how to introduce new features?
+
+they introduced typescript language.
+	idea is, any new versions will come in TS.
+
+	ts code is compiled to get javascript code.
+
+Typescript
+	is an object oriented programming language
+		interfaces
+		super class (inheritance)
+		overriding
+
+		type safe	
+			declare a variable of a specific type. and that variable allows only that type of date.
+		casting	conversion from one type to another type
+
+		multitype variable
+
+		let x:string|Date;
+
+		let x:any;			var x;
+
+angular, typescript
+	we will build the application
+	after the build process, the project becomes
+		html
+		css
+		js
+
+if you see any html website you created
+	some part of the code, you want to replace, to reuse, 
+	it is very cumbersome to copy and paste some 100 lines of code.
+
+	But think about component based approach.
+	create a component	(ex: 	LoginComponent)
+		plug this component
+		remove this component
+
+	easy to manage.
+
+How to start
+----------------
+Download
+	nodejs
+	and install
+
+cmd
+	node -v
+
+npm
+	is used to install further
+
+1) typescript compiler
+	npm install -g typescript
+		tsc -v
+2) angular
+	npm install -g @angular/cli
+
+	ng -v version	(shows the current version installed)
+
+
+IDE 
+	visual studio code	(free)		NOT visual studio 
+
+in vs code,
+	we can open a folder
+		our angular project is a folder
+
+HOW TO CREATE Angular Project
+	ng new project-name --routing --style=css
+
+
+project name
+	hyphen separated
+	each word should start with an alphabet	(not with number)	ex:	project-1	is not allowed 
+
+	use small letters. And for multiple words, use -
+
+
+9:34	50 seconds
+9:37	19 seconds
+
+less than 3 minutes
+
+this command creates a project folder and add basic programs into that folder
+1) module 		(app module)
+	app.module.ts
+2) component	(app component)
+	app.component.html		template	(html code)
+	app.component.ts		code	
+	app.component.spec.ts		testing code	
+	app.component.css		style
+3) configuration
+		json
+4) node_modules
+
+GO inside the project folder
+	cd <<folder name>>
+
+open vs code from this location
+
+to run the project
+	ng serve -o				at 9:40 am
+
+
+
+In angular, we follow component approach,
+	we create components and plug them anywhere
+
+
+index.html
+	this is the only web page present in our website.
+	we will plug components into this single page.
+
+I am going to use Bootstrap to create a basic structure of the website.
+
+how to use bootstrap in angular project
+	1) install bootstrap 
+		npm install bootstrap jquery --save
+
+
+npm install bootstrap jquery --save
+
+angular.json file:
+------------------
+"styles": [
+  "src/styles.css",
+  "node_modules/bootstrap/dist/css/bootstrap.min.css"
+],
+"scripts": [
+  "node_modules/jquery/dist/jquery.min.js",
+  "node_modules/bootstrap/dist/js/bootstrap.min.js"
+]
+
+
+--------------------------------
+If bootstrap.min.css won't work then 
+import this bootstrap.min.css in a style.css file like this:
+/* You can add global styles to this file, and also import other style files */
+
+@import url(https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css)
+
+
+
+
+	2) copy the bootstrap cdn to
+		index.html	
+			under <head>
+
+
+
+What is a component?
+	can be a reusable piece of code
+	that can be plugged anywhere 
+	
+	html		template
+	css		style
+	ts		code
+	spec.ts		testing
+
+how to create a component in angular?
+	ng g c login
+	(or)
+	ng generate component login
+
+	both are same only
+
+create
+	html		template
+	css		style
+	ts		code
+	spec.ts		testing
+
+	in app.module.ts
+		under declarations
+			the component must be declared
+
+
+what is a component
+	a class that is decorated by @Component decorator
+	in java language, @ is used for annotations. 
+	in typescript language, @ is decorator
+
+
+Binding:
+----------
+There is a variable in typescript code
+	.ts file
+
+that variable has a value
+
+1) interpolation
+how to display that value in html page?
+	interpolation
+		{{	}}
+
+		this is only for output purpose
+		display
+	
+
+
+2) property binding
+	[]
+
+	<p [align]="a">This is a para</p>
+
+3) event binding
+	()
+<input type="button" value="Login" class="btn btn-success" (click)="fn1()">
+
+4) two way data binding
+	[(	)]
+
+	forms module
+		ngModel
+
+	<input type="text"  id="" [(ngModel)]="a">
+		for this, you go to app.module.ts
+			import FormsModule
+
+ReactiveFormsModule
+	we can represent the FORM as an object
+
+in app.module.ts
+	import ReactiveFormsModule
+
+we need to create the object of the form in TS
+	then use html code
+
+Callling rest api from angular 
+	HttpClientModule
+		imported in app.module ts
+	
+
+how to use loops
+if conditions
+in html
+
+a
